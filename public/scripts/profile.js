@@ -1,4 +1,54 @@
 //json - am unsure as to how to read the json file at the moment
+
+var request = require('request');
+var access_token = 'AQXgR53pieLNelZaDEufOYRNwUOEplAuhaMCpADP4qNEyUu1wWG40AekaL3TP_yLd5KIz0mFWfbf-N1rkqHhIFlG4aIDlmT6qtPvvckzcCeFBAx-G75q_Fdc_EYWi6imsksjnzeTQ6iwHy5FKoG5SnmI9sskjRQqgKEkB4x81Tg1_wXo9zO4UAc-2Zk6-NkgGkXJP_cRH7YkRAHV9GKWh7egvx-jLXgqwOCPHN6iWzR3fWNHrl0WRSpfWloFGx1PQ_CCg-hAEnW5nF37USzMMneJfhvuJup6Az5VrWw0B1U3M65GJpHqj5BIJoP3ZAbiRBBoCaYUpVewdo404-ZyQSok8QbLew';
+
+function callMeAPI(accessToken, done){
+	request.get({url:"https://api.linkedin.com/v2/me",headers:{"Authorization": "Bearer "+accessToken}}, function(err,res,responseBody){
+		if (err) {
+			console.log(err);
+			done(err,null); 
+		}
+		else {
+			console.log(responseBody);
+			done(null,JSON.parse(responseBody)); 
+		}
+	});
+}
+
+function callEmailAPI(accessToken, done){
+	request.get({url:"https://api.linkedin.com/v2/emailAddress?q=members&projection=(elements*(handle~))",headers:{"Authorization": "Bearer "+accessToken}}, function(err,res,responseBody){
+		if (err) {
+			console.log(err);
+			done(err,null); 
+		}
+		else {
+			console.log(responseBody);
+			done(null,JSON.parse(responseBody)); 
+		}
+	});
+}
+
+function main(done){
+	callMeAPI(access_token,function(err, res){
+		if (err) {done(err)}
+		else{
+			var firstname = res.localizedFirstName;
+			var lastname = res.localizedLastName;
+			callEmailAPI(access_token,function(err, res){
+				if (err) {done(err)}
+				else{
+					var email = res.elements[0]["handle~"].emailAddress;
+					console.log(firstname+" "+lastname+" "+email);
+					done(null,"success");
+				}
+			});
+		}
+	});
+}
+
+main(function(a,b){});
+
 var usersJSON = '{ "users": [' +
             '{ "firstName": "Kelvin", "lastName": "Trang", "major": "Human-Centered Design & Development",' +
             '"experiences": { "experience1": { "company": "Hughes Network Systems", "title": "Network Security Intern",' +
