@@ -3,6 +3,21 @@
 var request = require('request');
 var access_token = 'AQXgR53pieLNelZaDEufOYRNwUOEplAuhaMCpADP4qNEyUu1wWG40AekaL3TP_yLd5KIz0mFWfbf-N1rkqHhIFlG4aIDlmT6qtPvvckzcCeFBAx-G75q_Fdc_EYWi6imsksjnzeTQ6iwHy5FKoG5SnmI9sskjRQqgKEkB4x81Tg1_wXo9zO4UAc-2Zk6-NkgGkXJP_cRH7YkRAHV9GKWh7egvx-jLXgqwOCPHN6iWzR3fWNHrl0WRSpfWloFGx1PQ_CCg-hAEnW5nF37USzMMneJfhvuJup6Az5VrWw0B1U3M65GJpHqj5BIJoP3ZAbiRBBoCaYUpVewdo404-ZyQSok8QbLew';
 
+callMeAPI(access_token);
+
+/*function callAPI(accessToken) {
+        $.ajax({
+            url: 'https://api.linkedin.com/v2/me',
+            method: 'GET',
+            beforeSend: function(xhr){xhr.setRequestHeader("Authorization", "Bearer "+accessToken);},
+            success: success
+        })
+    }
+
+function success(data) {
+        console.log(data);
+}*/
+
 function callMeAPI(accessToken, done){
 	request.get({url:"https://api.linkedin.com/v2/me",headers:{"Authorization": "Bearer "+accessToken}}, function(err,res,responseBody){
 		if (err) {
@@ -58,7 +73,7 @@ var usersJSON = '{ "users": [' +
             '"skills": [ "Java", "Linux", "HTML", "CSS", "JavaScript"], "profilePic": "./images/kelvin_profile.jpg" } ] }';
 
 let users = JSON.parse(usersJSON);
-let header = $("#header");
+/*let header = $("#header");
 
 //profile picture
 let img = document.createElement("img");
@@ -119,4 +134,4 @@ for(let i = 0; i < users.users[0].skills.length; i++) {
 }
 body.append(skillsList);
 
-//referenced w3schools and stackoverflow along with the textbook and notes
+//referenced w3schools and stackoverflow along with the textbook and notes*/
