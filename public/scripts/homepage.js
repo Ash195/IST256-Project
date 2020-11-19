@@ -35,5 +35,5 @@ function swapInfo(){
     }
 }
 
-var images = [];
+//want to do a thing where you hover or click on one of the purpose things on the list shown above and then the image changes var images = [];
 
