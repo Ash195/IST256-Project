@@ -2,21 +2,38 @@
 //different things the careers thing is intended to do
 
 
-const purposeButton = document.getElementById("purposeButton");
+document.querySelector("#purposeButton").addEventListener("click", swapInfo);
 //when button is hovered over it will show the purpose of the site
-logInButton.addEventListener("mouseover", showPurpose);
+//logInButton.addEventListener("mouseover", showPurpose);
 
-var purposeInfo = ["find a career of your dreams", "Learn new skills", "Make connections"];
+var questionMarks = "?, ?, ?";
+var purposeA = "Find a career of your dreams";
+var purposeB = "Learn new skills";
+var purposeC = "Make connections";
 
 //add the info for loop
-function showPurpose(){
-    for (let i = 0; i < purposeInfo.length; i++){
-        let list = document.getElementById("#purposeList");
+function swapInfo(){
+    let x = document.querySelector("#QuestionA");
+    if(x.textContent.indexOf("Questions") != -1) {
+        x.innerHTML = questionMarks;
+    }
+    else{
+        x.innerHTML = purposeA;
+    }
 
-        let listItem = document.createElement("li");
-        let text = document.createTextNode(purposeInfo[i]);
-        listItem.appendChild(text);
+    let y = document.querySelector("#QuestionB");
+    if(y.textContent.indexOf("Questions") != -1) {
+        y.innerHTML = questionMarks;
+    }
+    else{
+        y.innerHTML = purposeB;
+    }
 
-        list.appendChild(listItem);
+    let z = document.querySelector("#QuestionC");
+    if(z.textContent.indexOf("Questions") != -1) {
+        z.innerHTML = questionMarks;
+    }
+    else{
+        z.innerHTML = purposeC;
     }
 }

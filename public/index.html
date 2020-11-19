@@ -9,8 +9,6 @@
     <!--linking the css styles to this html-->
     <link href="styles/homepage.css" type="text/css" rel="stylesheet" />
 
-    <!--trying to link homepage.js to index html-->
-    <script src = "scripts/homepage.js" defer></script>
 </head>
 
 <body>
@@ -39,14 +37,31 @@
 
     <!--What if? message maybe have this on like an image slideshow or something idk-->
 
+
+
     <!--this is like thing that kind of explains what the site is intended for-->
-    <div class = "WhatIfs">
+    
+    <div class = "Purpose">
+        <br>
+        <!-- One stop shop text-->
         <p>What if you had a one stop shop to:</p>
-        <ul id = "WhatIfList"></ul>
+        <!--purpose button-->
+        <button id = "purposeButton">Click me to reveal!</button>
+    </div>
+
+    <div class = "Questions">
+        <div id = "purposeListGrid">
+            <div id = "QuestionA">?</div>
+            <div id = "QuestionB">?</div>
+            <div id = "QuestionC">?</div>
+        </div>
+
+
+        <!--<ul id = "WhatIfList"></ul>
             <li>Find a career of your dreams</li>
             <li>Learn new skills</li>
             <li>Make connections&nbsp;</li>
-            <br>
+            <br>-->
     </div>
 
     <br>
@@ -72,6 +87,10 @@
     </table>
 
     </div>
+
+    
+    <!--trying to link homepage.js to index html-->
+    <script src = "scripts/homepage.js" defer></script>
 </body>
 
 </html>
