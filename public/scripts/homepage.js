@@ -8,6 +8,7 @@ var purposeB = "Learn new skills";
 var purposeC = "Make connections";
 
 //add the info for loop
+//this is a bit "DRY" but I was having issues when it was using the same one before
 function swapInfo(){
     let x = document.querySelector("#QuestionA");
     if(x.textContent.indexOf("Questions") != -1) {
@@ -33,3 +34,6 @@ function swapInfo(){
         z.innerHTML = purposeC;
     }
 }
+
+var images = [];
+
