@@ -1,10 +1,6 @@
-//going to create do an eventlistener that is mouseover and shows
-//different things the careers thing is intended to do
-
+//when purposeButton is clicked the ?s will be swapped with info
 
 document.querySelector("#purposeButton").addEventListener("click", swapInfo);
-//when button is hovered over it will show the purpose of the site
-//logInButton.addEventListener("mouseover", showPurpose);
 
 var questionMarks = "?, ?, ?";
 var purposeA = "Find a career of your dreams";
