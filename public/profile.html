@@ -3,22 +3,31 @@
     <head>
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="scripts/profile.js" defer></script>
-        <link rel="stylesheet" type="text/css" href="styles/profile.css">
+        <link rel="stylesheet" type="text/css" href="styles/profile.css" defer>
     </head>
     <body>
+        <div class = "Menu">
+            <!--Menu stuff-->
+            <div id = "MenuGrid">
+                <div id = "ItemA"><a href = "index.html">Home</a></div>
+                <div id = "ItemB"><a href = "careers.html">Careers</a></div>
+                <div id = "ItemC"><a href = "connections.html">Connections/Companies</a></div>
+                <div id = "ItemD"><a href = "profile.html">Profile</a></div>
+            </div> 
+        </div>
         <!-- used for the header portion of the page -->
         <div id="header">
-
         </div>
+        <br>
+        <br>
+        <br>
         <!-- used for the body portion of the page -->
-        <p>
-            To signup, click the button below.<br>
-            <a href='https://www.linkedin.com/oauth/v2/authorization?response_type=code&state=987654321&scope=r_liteprofile&client_id=77o91atpgmy698&redirect_uri=https%3A%2F%2Fcalm-anchorage-98267.herokuapp.com%2F'>
-            <img src="images/linkedin.png" id="linkedInButton">
-            </a>
-        </p>
-        <div id="body" style="clear: both;">
-            
+        <div id="experiences">
+            <h2 id="xpHeader">Experiences</h2>
+        </div>
+        <br>
+        <div id="skills">
+            <h2 id="skillsHeader">Skills</h2>
         </div>
     </body>
 </html>
