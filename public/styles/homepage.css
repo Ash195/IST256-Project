@@ -9,6 +9,14 @@ div.LogoandLogin, div.Menu{
     color: var(--text-color--);
 }
 
+/*image styling*/
+img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+  }
+
 /*for logo and login div set background color as secondary color var*/
 .LogoandLogin{
     background-color:var(--secondary-color--);
@@ -69,3 +77,38 @@ div.welcomeMessage{
     padding:20px;
 }
 
+#purposeButton{
+    text-align: center;
+    background-color: var(--secondary-color--);
+    color: var(--text-color--);
+    font-size: 110%;
+    font-weight: 200;
+}
+
+#purposeListGrid {
+    text-align: left;
+    color: var(--primary-color--)
+}
+/*question grid*/
+#purposeListGrid{
+    width: 100%;
+    height: 50px;
+    padding: 0px;
+    grid-gap: 10px;
+    display: grid;
+    grid-template-columns: auto 1;
+    grid-template-rows: auto 3;
+}
+/*putting each question mark in it's own box*/
+#QuestionA{
+    grid-row: 1/2;
+    grid-column: 1;
+}
+#QuestionB{
+    grid-row: 2/3;
+    grid-column: 1;
+}
+#QuestionC{
+    grid-row: 3/4;
+    grid-column: 1;
+}
