@@ -66,7 +66,7 @@ function addExperience() {
 
         let form = document.createElement("form"); 
         form.setAttribute("method", "post"); 
-        form.setAttribute("action", "/create");
+        form.setAttribute("action", "../create");
 
         let title = document.createElement("input");
         title.setAttribute("type", "text");
