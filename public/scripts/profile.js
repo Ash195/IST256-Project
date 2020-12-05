@@ -1,4 +1,4 @@
-//json - am unsure as to how to read the json file at the moment
+//json
 var usersJSON = '{ "users": [' +
             '{ "firstName": "Kelvin", "lastName": "Trang", "major": "Human-Centered Design & Development",' +
             '"experiences": { "experience1": { "company": "Hughes Network Systems", "title": "Network Security Intern",' +
@@ -60,6 +60,69 @@ Object.keys(users.users[0].experiences).forEach(key => {
         container.append(container2);
         xp.append(container);
       });
+
+function addExperience() {
+        $("#xpButton").remove();
+
+        let form = document.createElement("form"); 
+        form.setAttribute("method", "post"); 
+        form.setAttribute("action", "../create");
+
+        let title = document.createElement("input");
+        title.setAttribute("type", "text");
+        title.setAttribute("name", "title");
+        let titleText = document.createElement("p");
+        titleText.innerText = "Title";
+
+        let company = document.createElement("input");
+        company.setAttribute("type", "text");
+        company.setAttribute("name", "company");
+        let companyText = document.createElement("p");
+        companyText.innerText = "Company";
+
+        let location = document.createElement("input");
+        location.setAttribute("type", "text");
+        location.setAttribute("name", "location");
+        let locationText = document.createElement("p");
+        locationText.innerText = "Location";
+
+        let startDate = document.createElement("input");
+        startDate.setAttribute("type", "text");
+        startDate.setAttribute("name", "startDate");
+        let startDateText = document.createElement("p");
+        startDateText.innerText = "Start Date";
+
+        let endDate = document.createElement("input");
+        endDate.setAttribute("type", "text");
+        endDate.setAttribute("name", "endDate");
+        let endDateText = document.createElement("p");
+        endDateText.innerText = "End Date";
+
+        let submit = document.createElement("input");
+        submit.setAttribute("type", "submit");
+        submit.setAttribute("value", "Create");
+
+        let br = document.createElement("br");
+
+        form.appendChild(titleText);
+        form.appendChild(title);
+        form.appendChild(br.cloneNode());
+        form.appendChild(companyText);
+        form.appendChild(company);
+        form.appendChild(br.cloneNode());
+        form.appendChild(locationText);
+        form.appendChild(location);
+        form.appendChild(br.cloneNode());
+        form.appendChild(startDateText);
+        form.appendChild(startDate);
+        form.appendChild(br.cloneNode());
+        form.appendChild(endDateText);
+        form.appendChild(endDate);
+        form.appendChild(br.cloneNode());
+        form.appendChild(submit);
+
+        $("#xpForm").append(form);
+}
 
 //skills
 let skillsContainer = $("#skills");
