@@ -2,7 +2,7 @@
 
 Instructions:
 npm start
-heroku open
+Access localhost:3000 from a web browser
 
 Our application consists of the following:
 -A Homepage

@@ -26,7 +26,10 @@ header.append(profileHeader);
 
 //experiences
 let xp = $("#experiences");
-updateExperiences();
+var xpCount = 0;
+var experienceTitles = [];
+var experienceID = [];
+showExperiences();
 
 function addExperience() {
         $("#xpButton").remove();
@@ -91,13 +94,13 @@ function addExperience() {
         $("#xpForm").append(form);
 }
 
-function updateExperiences() {
+function showExperiences() {
         xp.html("");
         let xpHeader = document.createElement("h2");
         xpHeader.setAttribute("id", "xpHeader");
         xpHeader.innerText = "Experiences";
         xp.append(xpHeader);
-
+        xpCount = 0;
         $.ajax({
                 method: 'GET',
                 url: '/profile/experiences',
@@ -108,11 +111,12 @@ function updateExperiences() {
                                 let container = document.createElement("div");
                                 container.classList.add("experience");
                                 let container2 = document.createElement("div");
-                                container.classList.add("experience2");
+                                container2.classList.add("experience2");
                         
                                 let title = document.createElement("h3");
                                 title.innerText = experience.title;
                                 title.classList.add("title");
+                                experienceTitles.push(experience.title);
                         
                                 let company = document.createElement("p");
                                 company.innerText = experience.company;
@@ -127,6 +131,8 @@ function updateExperiences() {
                                 let date = document.createElement("p");
                                 date.innerText = startDate + " - " + endDate;
                                 date.classList.add("date");
+                                
+                                experienceID.push(experience._id);
                         
                                 container.append(title);
                                 container2.append(company);
@@ -134,7 +140,54 @@ function updateExperiences() {
                                 container2.append(date);
                                 container.append(container2);
                                 xp.append(container);
+                                xpCount++;
                               });
+                }
+        })
+}
+
+function editExperience() {
+        $("#editButton").remove();
+
+        for(let i = 0; i < xpCount; i++) {
+                let radio = document.createElement("input");
+                radio.setAttribute("type", "radio");
+                radio.setAttribute("id", experienceTitles[i]);
+                radio.setAttribute("value", experienceID[i]);
+                radio.setAttribute("name", "XP");
+
+                let label = document.createElement("label");
+                label.setAttribute("for", experienceTitles[i]);
+                label.innerHTML = experienceTitles[i];
+
+                $("#editXP").append(radio);
+                $("#editXP").append(label);
+        }
+        let deleteButton = document.createElement("input");
+        deleteButton.setAttribute("type", "button");
+        deleteButton.setAttribute("value", "Delete");
+        deleteButton.setAttribute("id", "delButton");
+        deleteButton.setAttribute("onclick", "deleteExperience()");
+        $("#editXP").append(document.createElement("br"));
+        $("#editXP").append(deleteButton);
+}
+
+function deleteExperience() {
+        let radios = document.getElementsByName('XP');
+        var xpID;
+        for(let i = 0; i < radios.length; i++) {
+                if(radios[i].checked) {
+                        xpID = radios[i].value;
+                }
+        }
+        $.ajax({
+                method: 'GET',
+                url: '/profile/experiences/delete?id=' + xpID,
+                success: function(data){
+                        $("#editXP").html("");
+                        let msg = document.createElement("p");
+                        msg.innerText = "Experience deleted, refresh page to view results";
+                        $("#editXP").append(msg);
                 }
         })
 }

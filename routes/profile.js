@@ -13,4 +13,15 @@ router.get('/experiences', function(req, res, next){
      });
 })
 
+router.get('/experiences/delete', function(req, res, next){
+    Experience.findByIdAndRemove(req.query.id, function(err, data) {
+        if (data === null) {
+           console.log("No data found");
+        } 
+        else {
+           res.send("Experience deleted");
+        }
+     });
+})
+
 module.exports = router;
