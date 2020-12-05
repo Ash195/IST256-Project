@@ -7,6 +7,7 @@ var Experience = require("./models/experience");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var profileRouter = require('./routes/profile');
 
 var app = express();
 
@@ -19,6 +20,7 @@ app.use(express.static(path.join(__dirname, 'public'), {extensions: 'html'}));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/profile', profileRouter);
 
 app.post("/create", function(req, res) {
     var xp = new Experience({
@@ -30,8 +32,7 @@ app.post("/create", function(req, res) {
     });
 
     xp.save(function(err, xp) {
-        res.send("Experience with " + xp.id + " was saved.");  
-        console.log(xp);
+        res.send("New experience saved. Click the back button and refresh the page to view the new experience.");  
      });  
   });
 

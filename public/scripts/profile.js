@@ -26,40 +26,7 @@ header.append(profileHeader);
 
 //experiences
 let xp = $("#experiences");
-
-Object.keys(users.users[0].experiences).forEach(key => {
-        let experience = users.users[0].experiences[key];
-
-        let container = document.createElement("div");
-        container.classList.add("experience");
-        let container2 = document.createElement("div");
-        container.classList.add("experience2");
-
-        let title = document.createElement("h3");
-        title.innerText = experience.title;
-        title.classList.add("title");
-
-        let company = document.createElement("p");
-        company.innerText = experience.company;
-        company.classList.add("company");
-
-        let location = document.createElement("p");
-        location.innerText = experience.location;
-        location.classList.add("location");
-
-        let startDate = experience.startDate;
-        let endDate = experience.endDate;
-        let date = document.createElement("p");
-        date.innerText = startDate + " - " + endDate;
-        date.classList.add("date");
-
-        container.append(title);
-        container2.append(company);
-        container2.append(location);
-        container2.append(date);
-        container.append(container2);
-        xp.append(container);
-      });
+updateExperiences();
 
 function addExperience() {
         $("#xpButton").remove();
@@ -122,6 +89,54 @@ function addExperience() {
         form.appendChild(submit);
 
         $("#xpForm").append(form);
+}
+
+function updateExperiences() {
+        xp.html("");
+        let xpHeader = document.createElement("h2");
+        xpHeader.setAttribute("id", "xpHeader");
+        xpHeader.innerText = "Experiences";
+        xp.append(xpHeader);
+
+        $.ajax({
+                method: 'GET',
+                url: '/profile/experiences',
+                success: function(data){
+                        Object.keys(data).forEach(key => {
+                                let experience = data[key];
+                        
+                                let container = document.createElement("div");
+                                container.classList.add("experience");
+                                let container2 = document.createElement("div");
+                                container.classList.add("experience2");
+                        
+                                let title = document.createElement("h3");
+                                title.innerText = experience.title;
+                                title.classList.add("title");
+                        
+                                let company = document.createElement("p");
+                                company.innerText = experience.company;
+                                company.classList.add("company");
+                        
+                                let location = document.createElement("p");
+                                location.innerText = experience.location;
+                                location.classList.add("location");
+                        
+                                let startDate = experience.startDate;
+                                let endDate = experience.endDate;
+                                let date = document.createElement("p");
+                                date.innerText = startDate + " - " + endDate;
+                                date.classList.add("date");
+                        
+                                container.append(title);
+                                container2.append(company);
+                                container2.append(location);
+                                container2.append(date);
+                                container.append(container2);
+                                xp.append(container);
+                              });
+                }
+        })
 }
 
 //skills
