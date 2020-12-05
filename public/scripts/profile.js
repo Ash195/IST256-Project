@@ -29,8 +29,21 @@ let xp = $("#experiences");
 var xpCount = 0;
 var experienceTitles = [];
 var experienceID = [];
+var currentXP;
 showExperiences();
 
+//skills
+let skillsContainer = $("#skills");
+
+let skillsList = document.createElement("ul");
+for(let i = 0; i < users.users[0].skills.length; i++) {
+        let skill = document.createElement("li");
+        skill.innerText = users.users[0].skills[i];
+        skillsList.appendChild(skill);
+}
+skillsContainer.append(skillsList);
+
+//functions
 function addExperience() {
         $("#xpButton").remove();
 
@@ -41,32 +54,42 @@ function addExperience() {
         let title = document.createElement("input");
         title.setAttribute("type", "text");
         title.setAttribute("name", "title");
-        let titleText = document.createElement("p");
-        titleText.innerText = "Title";
+        title.setAttribute("id", "titleNew");
+        let titleText = document.createElement("label");
+        titleText.setAttribute("for", "titleNew");
+        titleText.innerText = "Title: ";
 
         let company = document.createElement("input");
         company.setAttribute("type", "text");
         company.setAttribute("name", "company");
-        let companyText = document.createElement("p");
-        companyText.innerText = "Company";
+        company.setAttribute("id", "companyNew");
+        let companyText = document.createElement("label");
+        companyText.setAttribute("for", "companyNew");
+        companyText.innerText = "Company: ";
 
         let location = document.createElement("input");
         location.setAttribute("type", "text");
         location.setAttribute("name", "location");
-        let locationText = document.createElement("p");
-        locationText.innerText = "Location";
+        location.setAttribute("id", "locationNew");
+        let locationText = document.createElement("label");
+        locationText.setAttribute("for", "locationNew");
+        locationText.innerText = "Location: ";
 
         let startDate = document.createElement("input");
         startDate.setAttribute("type", "text");
         startDate.setAttribute("name", "startDate");
-        let startDateText = document.createElement("p");
-        startDateText.innerText = "Start Date";
+        startDate.setAttribute("id", "startDateNew");
+        let startDateText = document.createElement("label");
+        startDateText.setAttribute("for", "startDateNew");
+        startDateText.innerText = "Start Date: ";
 
         let endDate = document.createElement("input");
         endDate.setAttribute("type", "text");
         endDate.setAttribute("name", "endDate");
-        let endDateText = document.createElement("p");
-        endDateText.innerText = "End Date";
+        endDate.setAttribute("id", "endDateNew");
+        let endDateText = document.createElement("label");
+        endDateText.setAttribute("for", "endDateNew");
+        endDateText.innerText = "End Date: ";
 
         let submit = document.createElement("input");
         submit.setAttribute("type", "submit");
@@ -88,6 +111,7 @@ function addExperience() {
         form.appendChild(br.cloneNode());
         form.appendChild(endDateText);
         form.appendChild(endDate);
+        form.appendChild(br.cloneNode());
         form.appendChild(br.cloneNode());
         form.appendChild(submit);
 
@@ -162,14 +186,21 @@ function editExperience() {
 
                 $("#editXP").append(radio);
                 $("#editXP").append(label);
+                $("#editXP").append(document.createElement("br"));
         }
         let deleteButton = document.createElement("input");
         deleteButton.setAttribute("type", "button");
         deleteButton.setAttribute("value", "Delete");
         deleteButton.setAttribute("id", "delButton");
         deleteButton.setAttribute("onclick", "deleteExperience()");
+        let update = document.createElement("input");
+        update.setAttribute("type", "button");
+        update.setAttribute("value", "Update");
+        update.setAttribute("id", "updateButton");
+        update.setAttribute("onclick", "showUpdateExperience()");
         $("#editXP").append(document.createElement("br"));
         $("#editXP").append(deleteButton);
+        $("#editXP").append(update);
 }
 
 function deleteExperience() {
@@ -192,15 +223,112 @@ function deleteExperience() {
         })
 }
 
-//skills
-let skillsContainer = $("#skills");
+function showUpdateExperience() {
+        let radios = document.getElementsByName('XP');
+        for(let i = 0; i < radios.length; i++) {
+                if(radios[i].checked) {
+                        currentXP = radios[i].value;
+                }
+        }
+        $.ajax({
+                method: 'GET',
+                url: '/profile/experience?id=' + currentXP,
+                success: function(data){
+                        $("#editXP").html("");
 
-let skillsList = document.createElement("ul");
-for(let i = 0; i < users.users[0].skills.length; i++) {
-        let skill = document.createElement("li");
-        skill.innerText = users.users[0].skills[i];
-        skillsList.appendChild(skill);
+                        let updateContainer = document.createElement("div");
+                        updateContainer.setAttribute("id", "updateContainer");
+
+                        let title = document.createElement("input");
+                        title.setAttribute("type", "text");
+                        title.setAttribute("name", "title");
+                        title.setAttribute("value", data.title);
+                        title.setAttribute("id", "titleUpdate");
+                        let titleText = document.createElement("label");
+                        titleText.setAttribute("for", "titleUpdate");
+                        titleText.innerText = "Title: ";
+
+                        let company = document.createElement("input");
+                        company.setAttribute("type", "text");
+                        company.setAttribute("name", "company");
+                        company.setAttribute("value", data.company);
+                        company.setAttribute("id", "companyUpdate");
+                        let companyText = document.createElement("label");
+                        companyText.setAttribute("for", "companyUpdate");
+                        companyText.innerText = "Company: ";
+
+                        let location = document.createElement("input");
+                        location.setAttribute("type", "text");
+                        location.setAttribute("name", "location");
+                        location.setAttribute("value", data.location);
+                        location.setAttribute("id", "locationUpdate");
+                        let locationText = document.createElement("label");
+                        locationText.setAttribute("for", "locationUpdate");
+                        locationText.innerText = "Location: ";
+
+                        let startDate = document.createElement("input");
+                        startDate.setAttribute("type", "text");
+                        startDate.setAttribute("name", "startDate");
+                        startDate.setAttribute("value", data.startDate);
+                        startDate.setAttribute("id", "startDateUpdate");
+                        let startDateText = document.createElement("label");
+                        startDateText.setAttribute("for", "startDateUpdate");
+                        startDateText.innerText = "Start Date: ";
+
+                        let endDate = document.createElement("input");
+                        endDate.setAttribute("type", "text");
+                        endDate.setAttribute("name", "endDate");
+                        endDate.setAttribute("value", data.endDate);
+                        endDate.setAttribute("id", "endDateUpdate");
+                        let endDateText = document.createElement("label");
+                        endDateText.setAttribute("for", "endDateUpdate");
+                        endDateText.innerText = "End Date: ";
+
+                        let update = document.createElement("input");
+                        update.setAttribute("type", "button");
+                        update.setAttribute("value", "Update");
+                        update.setAttribute("id", "updateBtn");
+                        update.setAttribute("onclick", "updateExperience()");
+
+                        let br = document.createElement("br");
+
+                        updateContainer.append(titleText);
+                        updateContainer.append(title);
+                        updateContainer.append(br.cloneNode());
+                        updateContainer.append(companyText);
+                        updateContainer.append(company);
+                        updateContainer.append(br.cloneNode());
+                        updateContainer.append(locationText);
+                        updateContainer.append(location);
+                        updateContainer.append(br.cloneNode());
+                        updateContainer.append(startDateText);
+                        updateContainer.append(startDate);
+                        updateContainer.append(br.cloneNode());
+                        updateContainer.append(endDateText);
+                        updateContainer.append(endDate);
+                        updateContainer.append(br.cloneNode());
+                        updateContainer.append(update);
+                        $("#editXP").append(updateContainer);
+                }
+        })
 }
-skillsContainer.append(skillsList);
 
+function updateExperience() {
+        let title = $("#titleUpdate").val();
+        let company = $("#companyUpdate").val();
+        let location = $("#locationUpdate").val();
+        let startDate = $("#startDateUpdate").val();
+        let endDate = $("#endDateUpdate").val();
+
+        $.ajax({
+                method: 'GET',
+                url: '/profile/experiences/update?id=' + currentXP + '&title=' + title + '&company=' + company + '&location=' + location + '&start=' + startDate + '&end=' + endDate,
+                success: function(data){
+                        $("#editXP").html("");
+                        let msg = document.createElement("p");
+                        msg.innerText = "Experience updated, refresh page to view results";
+                        $("#editXP").append(msg);
+                }
+        })
+}
 //referenced w3schools and stackoverflow along with the textbook and notes

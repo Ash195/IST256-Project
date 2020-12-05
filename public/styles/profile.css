@@ -84,3 +84,13 @@ div > img {
 #experiences div div {
   font-style: italic;
 }
+
+#xpForm label {
+  width: 75px;
+  display: inline-block;
+}
+
+#updateContainer label {
+  width: 75px;
+  display: inline-block;
+}
