@@ -5,7 +5,10 @@ body {
 div.Menu{
   background-color:var(--secondary-color--);
   color:white;
-  font-weight: bold;
+}
+
+a{
+  text-decoration: none;
 }
 
 #MenuGrid{
@@ -15,8 +18,9 @@ div.Menu{
   padding: 0px;
   grid-gap: 10px;
   display: grid;
-  grid-template-columns: auto 5;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: auto 1;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 div a {
@@ -42,6 +46,10 @@ div a:hover {
 #ItemD{
   grid-row:1;
   grid-column:4/5;
+}
+#ItemE{
+  grid-row:1;
+  grid-column: 5/6;
 }
 
 #MenuGrid > div{

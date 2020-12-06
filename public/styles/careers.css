@@ -37,6 +37,10 @@ a{
     grid-row:1;
     grid-column:4/5;
 }
+#ItemE{
+    grid-row: 1;
+    grid-column: 5/6;
+}
 
 #MenuGrid > div{
     text-align: center;

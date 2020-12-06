@@ -35,7 +35,6 @@ li{
 div.Menu{
     background-color:var(--secondary-color--);
     color:white;
-    font-weight: bold;
 }
 
 a {
