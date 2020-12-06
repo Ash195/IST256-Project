@@ -1,23 +1,31 @@
-//ran into a few issues accessing specific elements, but 
-//successfully retrieved jobs and logged in console
 const rootURL = 'http://api.dataatwork.org/v1/';
 
 $(document).ready(function(){
-    search();
+    search('2c77c703bd66e104c78b1392c3203362');
 });
 
 
-function search(){
+function search(id){
     $.ajax({
-        url: rootURL + 'jobs',
+        url: rootURL + 'skills/' + id + '/related_jobs' ,
         method: 'GET',
         success: success
 
     });
 }
 function success(data){
-    console.log(data);
+    let related_jobs = data.jobs;
+    let x = 0;
+        while(x < 10){
+        let jobname = related_jobs[x].job_title;
+        console.log(jobname);
+        let p = $('<ul></ul>').text(jobname);
+        $('#rec_jobs').append(p);
+        x++;
+        }
 }
 
+  
+  
   
   
