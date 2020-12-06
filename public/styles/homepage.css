@@ -5,6 +5,10 @@
     --text-color--: white;
 }
 
+body{
+    background:white;
+}
+
 /*setting text for these divs as white but I realized they're mostly links so they won't show as white really*/
 div.LogoandLogin, div.Menu{
     color: var(--text-color--);
