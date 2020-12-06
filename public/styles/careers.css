@@ -2,9 +2,13 @@ body{
     background-color: white;
 }
 
-a{
+#gridHeader a{
     color: white;
     text-decoration: none;
+}
+
+.flexContainer a{
+    color:black;
 }
 
 /*Creating the grid*/
@@ -42,7 +46,7 @@ a{
     grid-column: 5/6;
 }
 
-#MenuGrid > div{
+#gridHeader > div{
     text-align: center;
     padding:20px;
 }
@@ -63,6 +67,7 @@ h1{
     width: 100%;
     justify-content: center;
     align-items: center;
+    flex-direction:column;
 }
 
 .flexContainer{
