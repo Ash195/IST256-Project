@@ -22,18 +22,4 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/profile', profileRouter);
 
-app.post("/create", function(req, res) {
-    var xp = new Experience({
-        company:   req.body.company,
-        title:     req.body.title,
-        location:  req.body.location,
-        startDate: req.body.startDate,
-        endDate:   req.body.endDate,
-    });
-
-    xp.save(function(err, xp) {
-        res.send("New experience saved. Click the back button and refresh the page to view the new experience.");  
-     });  
-  });
-
 module.exports = app;

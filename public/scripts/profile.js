@@ -47,9 +47,8 @@ skillsContainer.append(skillsList);
 function addExperience() {
         $("#xpButton").remove();
 
-        let form = document.createElement("form"); 
-        form.setAttribute("method", "post"); 
-        form.setAttribute("action", "../create");
+        let createContainer = document.createElement("div");
+        createContainer.setAttribute("id", "createContainer");
 
         let title = document.createElement("input");
         title.setAttribute("type", "text");
@@ -91,31 +90,51 @@ function addExperience() {
         endDateText.setAttribute("for", "endDateNew");
         endDateText.innerText = "End Date: ";
 
-        let submit = document.createElement("input");
-        submit.setAttribute("type", "submit");
-        submit.setAttribute("value", "Create");
+        let create = document.createElement("input");
+        create.setAttribute("type", "button");
+        create.setAttribute("value", "Create");
+        create.setAttribute("id", "createBtn");
+        create.setAttribute("onclick", "createExperience()");
+
 
         let br = document.createElement("br");
 
-        form.appendChild(titleText);
-        form.appendChild(title);
-        form.appendChild(br.cloneNode());
-        form.appendChild(companyText);
-        form.appendChild(company);
-        form.appendChild(br.cloneNode());
-        form.appendChild(locationText);
-        form.appendChild(location);
-        form.appendChild(br.cloneNode());
-        form.appendChild(startDateText);
-        form.appendChild(startDate);
-        form.appendChild(br.cloneNode());
-        form.appendChild(endDateText);
-        form.appendChild(endDate);
-        form.appendChild(br.cloneNode());
-        form.appendChild(br.cloneNode());
-        form.appendChild(submit);
+        createContainer.append(titleText);
+        createContainer.append(title);
+        createContainer.append(br.cloneNode());
+        createContainer.append(companyText);
+        createContainer.append(company);
+        createContainer.append(br.cloneNode());
+        createContainer.append(locationText);
+        createContainer.append(location);
+        createContainer.append(br.cloneNode());
+        createContainer.append(startDateText);
+        createContainer.append(startDate);
+        createContainer.append(br.cloneNode());
+        createContainer.append(endDateText);
+        createContainer.append(endDate);
+        createContainer.append(br.cloneNode());
+        createContainer.append(create);
+        $("#newXP").append(createContainer);
+}
 
-        $("#xpForm").append(form);
+function createExperience() {
+        let title = $("#titleNew").val();
+        let company = $("#companyNew").val();
+        let location = $("#locationNew").val();
+        let startDate = $("#startDateNew").val();
+        let endDate = $("#endDateNew").val();
+
+        $.ajax({
+                method: 'GET',
+                url: '/profile/experiences/create?title=' + title + '&company=' + company + '&location=' + location + '&start=' + startDate + '&end=' + endDate,
+                success: function(data){
+                        $("#newXP").html("");
+                        let msg = document.createElement("p");
+                        msg.innerText = "Experience created, refresh page to view results";
+                        $("#newXP").append(msg);
+                }
+        })
 }
 
 function showExperiences() {

@@ -24,6 +24,20 @@ router.get('/experience', function(req, res, next){
     });
 })
 
+router.get("/experiences/create", function(req, res) {
+   var xp = new Experience({
+       company:   req.query.company,
+       title:     req.query.title,
+       location:  req.query.location,
+       startDate: req.query.start,
+       endDate:   req.query.end,
+   });
+
+   xp.save(function(err, xp) {
+       res.send("Experience created");  
+    });  
+ });
+
 router.get('/experiences/delete', function(req, res, next){
     Experience.findByIdAndRemove(req.query.id, function(err, data) {
         if (data === null) {
