@@ -12,7 +12,7 @@ let header = $("#header");
 
 //profile picture
 let img = document.createElement("img");
-img.src = users.users[0].profilePic;
+img.src = "./images/tempProfilePic.jpg"
 img.alt = users.users[0].firstName + "'s Profile Picture";
 img.width = 200;
 img.height = 200;
