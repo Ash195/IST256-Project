@@ -18,7 +18,7 @@ a{
   padding: 0px;
   grid-gap: 10px;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: auto 1;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
@@ -50,6 +50,10 @@ div a:hover {
 #ItemE{
   grid-row:1;
   grid-column: 5/6;
+}
+#ItemF{
+  grid-row: 1;
+  grid-column: 6/7;
 }
 
 #MenuGrid > div{

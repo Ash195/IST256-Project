@@ -1,6 +1,5 @@
 body {
     background-color: white;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   }
   ul {
     list-style-type: none;
@@ -21,7 +20,7 @@ body {
     grid-gap: 10px;
     display: grid;
     /*puts columns out equally*/
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: auto 1;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #333;
@@ -47,6 +46,10 @@ body {
 #ItemE{
     grid-row: 1;
     grid-column:5/6;
+}
+#ItemF{
+  grid-row: 1;
+  grid-column: 6/7;
 }
 
 #MenuGrid > div{
@@ -79,22 +82,35 @@ body {
       transform: translate(0%, -120%);
   }
 
+  #header{
+    flex: display;
+    justify-content: center;
+    align-items: center;
+  }
+
   #header {
-    padding: 50px;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
     text-align: center;
     background: lightskyblue;
     color: white;
-    font-size: 30px;
+    font-size: 50px;
+    margin-top: 0;
   }
 
   #companyContainer {
     width: 1000px;
-    height:1500px;
-    padding-top: 10px;
+    height:100px;
+    padding-top: 125px;
     padding-bottom: 10px;
     padding-left: 7.5%;
     padding-right: 5%;
 
+  }
+  
+  a {
+    font: black;
   }
 
   li {
@@ -105,8 +121,8 @@ body {
     width: 315px;
     height: 250px;
     text-align: center;
-    border: 1px solid aliceblue;
-    background-color: aliceblue;
+    border: 1px solid #333;
+    background-color:lightskyblue;
   }
 
 
@@ -144,3 +160,6 @@ body {
     transform: translate(15%,-130%);
   }
 
+  #header > p {
+    margin-top: 0;
+  }
