@@ -121,8 +121,8 @@ body {
     width: 315px;
     height: 250px;
     text-align: center;
-    border: 1px solid lightskyblue;
-    background-color: lightskyblue;
+    border: 1px solid #333;
+    background-color: rgb(198, 227, 255);
   }
 
 
