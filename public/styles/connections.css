@@ -91,7 +91,7 @@ body {
   #header {
     justify-content: center;
     align-items: center;
-    padding: 50px;
+    padding: 0px;
     text-align: center;
     background: lightskyblue;
     color: white;
@@ -121,8 +121,8 @@ body {
     width: 315px;
     height: 250px;
     text-align: center;
-    border: 1px solid lightskyblue;
-    background-color: lightskyblue;
+    border: 1px solid #333;
+    background-color:lightskyblue;
   }
 
 
@@ -160,3 +160,6 @@ body {
     transform: translate(15%,-130%);
   }
 
+  #header > p {
+    margin-top: 0;
+  }
