@@ -89,12 +89,16 @@ body {
 
   #companyContainer {
     width: 1000px;
-    height:1500px;
+    height:100px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 7.5%;
     padding-right: 5%;
 
+  }
+  
+  a {
+    font: black;
   }
 
   li {
@@ -105,8 +109,8 @@ body {
     width: 315px;
     height: 250px;
     text-align: center;
-    border: 1px solid aliceblue;
-    background-color: aliceblue;
+    border: 1px solid lightskyblue;
+    background-color: lightskyblue;
   }
 
 

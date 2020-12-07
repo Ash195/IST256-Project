@@ -1,10 +1,10 @@
-{
-    "company": [
-    {
-        "jobs":[],
-        "location": "jfdjkfds",
-        "skillFocus":["CSS", "JavaScript", "HTML", "Ruby"]
+// {
+//     "company": [
+//     {
+//         "jobs":[],
+//         "location": ["San Antonio, California",],
+//         "skillFocus":["CSS", "JavaScript", "HTML", "Ruby"]
         
-    }
-]
-}
+//     }
+// ]
+// }
