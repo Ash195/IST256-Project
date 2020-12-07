@@ -69,3 +69,8 @@ a {
 #contactText>p{
     margin-top: 0;
 }
+
+form label {
+    width: 90px;
+    display: inline-block;
+  }
