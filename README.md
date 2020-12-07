@@ -11,10 +11,11 @@ Our application consists of the following pages:
 -Contact
 -Profile
 -Login
--Create New Account
-The way we approached working on this together was that initially each member focused on a single page’s HTML and CSS (and JS if utilized). Each member first contributed as so:
-Elizabeth - Homepage
-Kelvin - Profile
-Nick - Careers
-Caroline - Connections 
+-Create Account
+
+Each member's main contributions: 
+Elizabeth - Homepage / Login / Making the CSS the same across all pages
+Kelvin - Profile / Create Account / Mongoose & Database
+Nick - Careers / API
+Caroline - Connections / Contact
 As the project went on, we collaborated more on all of the pages.
