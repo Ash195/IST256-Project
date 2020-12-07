@@ -96,7 +96,7 @@ router.get('/person/createXP', function(req, res, next){
          exp.push(xp);
          Person.updateOne({"username": req.query.user}, {"experiences": exp}, function(err, data){
             if (data === null){
-               console.log("No data found 2");
+               console.log("No data found");
             }
             else{
                res.send("Experience created");
@@ -108,57 +108,140 @@ router.get('/person/createXP', function(req, res, next){
 
 //looks for /profile/person/experiences - this returns all experience objects
 router.get('/person/experiences', function(req, res, next){
-    Experience.find({}, function(err, data) {
-        if (data === null) {
-           console.log("No data found");
-        } 
-        else {
-           res.send(data);
-        }
-     });
+   Person.findOne({"username": req.query.user}, function(err, data){
+      if (data === null){
+         console.log("No data found");
+      }
+      else{
+         res.send(data.experiences);
+      }
+   });
 })
 
 //this looks for a specific experience if given an id
 router.get('/person/experience', function(req, res, next){
-   Experience.findById(req.query.id, function(err, data) {
+   Person.findOne({"username": req.query.user}, function(err, data) {
        if (data === null) {
           console.log("No data found");
        } 
        else {
-          res.send(data);
+          var xp;
+          for(let i = 0; i < data.experiences.length; i++){
+             if(data.experiences[i]._id == req.query.id){
+                xp = data.experiences[i];
+             }
+          }
+          res.send(xp);
        }
     });
 })
 
 //deletes experience if given id
 router.get('/person/experiences/delete', function(req, res, next){
-    Experience.findByIdAndRemove(req.query.id, function(err, data) {
+    Person.findOne({"username": req.query.user}, function(err, data) {
         if (data === null) {
            console.log("No data found");
         } 
         else {
-           res.send("Experience deleted");
+           let exp = data.experiences;
+           let index = 0;
+           for(let i = 0; i < exp.length; i++){
+               if(exp[i]._id == req.query.id){
+                  index = i;
+               }
+           }
+           exp.splice(index, 1);
+           Person.updateOne({"username": req.query.user}, {"experiences": exp}, function(err, data){
+            if (data === null){
+               console.log("No data found");
+            }
+            else{
+               res.send("Experience deleted");
+            }
+         });
         }
      });
 })
 //updates experience if given id and variables
 router.get('/person/experiences/update', function(req, res, next){
-   Experience.findByIdAndUpdate(req.query.id, {
-      "$set": {
-         "title": req.query.title,
-         "company": req.query.company,
-         "location": req.query.location,
-         "startDate": req.query.start,
-         "endDate": req.query.end
+   Person.findOne({"username": req.query.user}, function(err, data) {
+      if (data === null) {
+         console.log("No data found");
+      } 
+      else {
+         var exp = data.experiences;
+         var xp;
+         for(let i = 0; i < exp.length; i++){
+            if(exp[i]._id == req.query.id){
+               xp = exp[i];
+            }
+         }
+         xp.title = req.query.title;
+         xp.company = req.query.company;
+         xp.location = req.query.location;
+         xp.startDate = req.query.start;
+         xp.endDate = req.query.end;
+         Person.updateOne({"username": req.query.user}, {"experiences": exp}, function(err, data){
+            if (data === null){
+               console.log("No data found");
+            }
+            else{
+               res.send("Experience updated");
+            }
+         });
       }
-   },function(err, data) {
-       if (data === null) {
-          console.log("No data found");
-       } 
-       else {
-          res.send("Experience updated");
-       }
-    });
+   });
+})
+
+router.get('/person/skills', function(req, res, next){
+   Person.findOne({"username": req.query.user}, function(err, data){
+      if (data === null){
+         console.log("No data found");
+      }
+      else{
+         res.send(data.skills);
+      }
+   });
+})
+
+router.get('/person/skills/add', function(req, res, next){
+   Person.findOne({"username": req.query.user}, function(err, data){
+      if (data === null){
+         console.log("No data found");
+      }
+      else{
+         let skills = data.skills;
+         skills.push(req.query.skill);
+         Person.updateOne({"username": req.query.user}, {"skills": skills}, function(err, data){
+            if (data === null){
+               console.log("No data found");
+            }
+            else{
+               res.send("Skill added");
+            }
+         });
+      }
+   });
+})
+
+router.get('/person/skills/delete', function(req, res, next){
+   Person.findOne({"username": req.query.user}, function(err, data){
+      if (data === null){
+         console.log("No data found");
+      }
+      else{
+         let skills = data.skills;
+         skills.splice(req.query.index, 1);
+         Person.updateOne({"username": req.query.user}, {"skills": skills}, function(err, data){
+            if (data === null){
+               console.log("No data found");
+            }
+            else{
+               res.send("Skill removed");
+            }
+         });
+      }
+   });
 })
 
 router.get('/login', function(req, res, next){

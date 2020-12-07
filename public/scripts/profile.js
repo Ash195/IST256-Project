@@ -1,13 +1,3 @@
-//json
-var usersJSON = '{ "users": [' +
-            '{ "firstName": "Kelvin", "lastName": "Trang", "major": "Human-Centered Design & Development",' +
-            '"experiences": { "experience1": { "company": "Hughes Network Systems", "title": "Network Security Intern",' +
-                    '"location": "Germantown, MD", "startDate": "June 2019", "endDate": "Jan 2020" },' +
-            '"experience2": { "company": "Penn State IT Service Desk", "title": "IT Consultant", "location": "University Park, PA",' +
-                    '"startDate": "Oct 2020", "endDate": "Present" } },' +
-            '"skills": [ "Java", "Linux", "HTML", "CSS", "JavaScript"], "profilePic": "./images/kelvin_profile.jpg" } ] }';
-
-let users = JSON.parse(usersJSON);
 let header = $("#header");
 
 findCurrentUser();
@@ -15,7 +5,7 @@ findCurrentUser();
 //profile picture
 let img = document.createElement("img");
 img.src = "./images/tempProfilePic.jpg"
-img.alt = users.users[0].firstName + "'s Profile Picture";
+img.alt = "Profile Picture";
 img.width = 200;
 img.height = 200;
 header.append(img);
@@ -26,9 +16,14 @@ var xpCount = 0;
 var experienceTitles = [];
 var experienceID = [];
 var currentXP;
-//showExperiences();
+showExperiences();
 
-//functions
+//skills
+var skillsArray = [];
+showSkills();
+
+//functions for experiences
+//gets current user and displays header
 function findCurrentUser() {
         $.ajax({
                 method: 'GET',
@@ -39,60 +34,11 @@ function findCurrentUser() {
                         profileHeader.id = "name";
                         profileHeader.innerText = data.firstName + " " + data.lastName;
                         header.append(profileHeader);
-                        
-                        //experiences
-                        Object.keys(data.experiences).forEach(key => {
-                                let experience = data.experiences[key];
-                        
-                                let container = document.createElement("div");
-                                container.classList.add("experience");
-                                let container2 = document.createElement("div");
-                                container2.classList.add("experience2");
-                        
-                                let title = document.createElement("h3");
-                                title.innerText = experience.title;
-                                title.classList.add("title");
-                                experienceTitles.push(experience.title);
-                        
-                                let company = document.createElement("p");
-                                company.innerText = experience.company;
-                                company.classList.add("company");
-                        
-                                let location = document.createElement("p");
-                                location.innerText = experience.location;
-                                location.classList.add("location");
-                        
-                                let startDate = experience.startDate;
-                                let endDate = experience.endDate;
-                                let date = document.createElement("p");
-                                date.innerText = startDate + " - " + endDate;
-                                date.classList.add("date");
-                                
-                                experienceID.push(experience._id);
-                        
-                                container.append(title);
-                                container2.append(company);
-                                container2.append(location);
-                                container2.append(date);
-                                container.append(container2);
-                                xp.append(container);
-                                xpCount++;
-                        });
-
-                        //skills
-                        let skillsContainer = $("#skills");
-
-                        let skillsList = document.createElement("ul");
-                        for(let i = 0; i < data.skills.length; i++) {
-                                let skill = document.createElement("li");
-                                skill.innerText = data.skills[i];
-                                skillsList.appendChild(skill);
-                        }
-                        skillsContainer.append(skillsList);
                 }
             })
 }
 
+//runs when add new experience button is clicked, shows text boxes and create button
 function addExperience() {
         $("#xpButton").remove();
 
@@ -167,6 +113,7 @@ function addExperience() {
         $("#newXP").append(createContainer);
 }
 
+//runs when create button is clicked, creates new experience in the database
 function createExperience() {
         let title = $("#titleNew").val();
         let company = $("#companyNew").val();
@@ -183,7 +130,7 @@ function createExperience() {
                                 success: function(data){
                                         $("#newXP").html("");
                                         let msg = document.createElement("p");
-                                        msg.innerText = "Experience created, refresh page to view results";
+                                        msg.innerText = "New experience created, refresh page to view results";
                                         $("#newXP").append(msg);
                         }
                 })
@@ -192,6 +139,7 @@ function createExperience() {
         
 }
 
+//updates page with experiences from database
 function showExperiences() {
         xp.html("");
         let xpHeader = document.createElement("h2");
@@ -201,49 +149,56 @@ function showExperiences() {
         xpCount = 0;
         $.ajax({
                 method: 'GET',
-                url: '/profile/experiences',
+                url: '/profile/findCurrentUser',
                 success: function(data){
-                        Object.keys(data).forEach(key => {
-                                let experience = data[key];
-                        
-                                let container = document.createElement("div");
-                                container.classList.add("experience");
-                                let container2 = document.createElement("div");
-                                container2.classList.add("experience2");
-                        
-                                let title = document.createElement("h3");
-                                title.innerText = experience.title;
-                                title.classList.add("title");
-                                experienceTitles.push(experience.title);
-                        
-                                let company = document.createElement("p");
-                                company.innerText = experience.company;
-                                company.classList.add("company");
-                        
-                                let location = document.createElement("p");
-                                location.innerText = experience.location;
-                                location.classList.add("location");
-                        
-                                let startDate = experience.startDate;
-                                let endDate = experience.endDate;
-                                let date = document.createElement("p");
-                                date.innerText = startDate + " - " + endDate;
-                                date.classList.add("date");
-                                
-                                experienceID.push(experience._id);
-                        
-                                container.append(title);
-                                container2.append(company);
-                                container2.append(location);
-                                container2.append(date);
-                                container.append(container2);
-                                xp.append(container);
-                                xpCount++;
-                              });
+                        $.ajax({
+                                method: 'GET',
+                                url: '/profile/person/experiences?user=' + data.username,
+                                success: function(info){
+                                        Object.keys(info).forEach(key => {
+                                                let experience = info[key];
+                                        
+                                                let container = document.createElement("div");
+                                                container.classList.add("experience");
+                                                let container2 = document.createElement("div");
+                                                container2.classList.add("experience2");
+                                        
+                                                let title = document.createElement("h3");
+                                                title.innerText = experience.title;
+                                                title.classList.add("title");
+                                                experienceTitles.push(experience.title);
+                                        
+                                                let company = document.createElement("p");
+                                                company.innerText = experience.company;
+                                                company.classList.add("company");
+                                        
+                                                let location = document.createElement("p");
+                                                location.innerText = experience.location;
+                                                location.classList.add("location");
+                                        
+                                                let startDate = experience.startDate;
+                                                let endDate = experience.endDate;
+                                                let date = document.createElement("p");
+                                                date.innerText = startDate + " - " + endDate;
+                                                date.classList.add("date");
+                                                
+                                                experienceID.push(experience._id);
+                                        
+                                                container.append(title);
+                                                container2.append(company);
+                                                container2.append(location);
+                                                container2.append(date);
+                                                container.append(container2);
+                                                xp.append(container);
+                                                xpCount++;
+                                              });
+                                }
+                        })
                 }
         })
 }
 
+//shows radio buttons and delete/update button when edit experience button is clicked
 function editExperience() {
         $("#editButton").remove();
 
@@ -277,6 +232,7 @@ function editExperience() {
         $("#editXP").append(update);
 }
 
+//runs when delete button is clicked, deletes selected experience
 function deleteExperience() {
         let radios = document.getElementsByName('XP');
         var xpID;
@@ -287,13 +243,20 @@ function deleteExperience() {
         }
         $.ajax({
                 method: 'GET',
-                url: '/profile/experiences/delete?id=' + xpID,
+                url: '/profile/findCurrentUser',
                 success: function(data){
-                        location.href = "profile.html";
+                        $.ajax({
+                                method: 'GET',
+                                url: '/profile/person/experiences/delete?user='+ data.username + '&id=' + xpID,
+                                success: function(data){
+                                        location.href = "profile.html";
+                                }
+                        })
                 }
         })
 }
 
+//runs when update button is clicked, shows form with values of selected experience
 function showUpdateExperience() {
         let radios = document.getElementsByName('XP');
         for(let i = 0; i < radios.length; i++) {
@@ -303,87 +266,94 @@ function showUpdateExperience() {
         }
         $.ajax({
                 method: 'GET',
-                url: '/profile/experience?id=' + currentXP,
-                success: function(data){
-                        $("#editXP").html("");
+                url: '/profile/findCurrentUser',
+                success: function(user){
+                        $.ajax({
+                                method: 'GET',
+                                url: '/profile/person/experience?user='+ user.username + '&id=' + currentXP,
+                                success: function(data){
+                                        $("#editXP").html("");
 
-                        let updateContainer = document.createElement("div");
-                        updateContainer.setAttribute("id", "updateContainer");
+                                        let updateContainer = document.createElement("div");
+                                        updateContainer.setAttribute("id", "updateContainer");
 
-                        let title = document.createElement("input");
-                        title.setAttribute("type", "text");
-                        title.setAttribute("name", "title");
-                        title.setAttribute("value", data.title);
-                        title.setAttribute("id", "titleUpdate");
-                        let titleText = document.createElement("label");
-                        titleText.setAttribute("for", "titleUpdate");
-                        titleText.innerText = "Title: ";
+                                        let title = document.createElement("input");
+                                        title.setAttribute("type", "text");
+                                        title.setAttribute("name", "title");
+                                        title.setAttribute("value", data.title);
+                                        title.setAttribute("id", "titleUpdate");
+                                        let titleText = document.createElement("label");
+                                        titleText.setAttribute("for", "titleUpdate");
+                                        titleText.innerText = "Title: ";
 
-                        let company = document.createElement("input");
-                        company.setAttribute("type", "text");
-                        company.setAttribute("name", "company");
-                        company.setAttribute("value", data.company);
-                        company.setAttribute("id", "companyUpdate");
-                        let companyText = document.createElement("label");
-                        companyText.setAttribute("for", "companyUpdate");
-                        companyText.innerText = "Company: ";
+                                        let company = document.createElement("input");
+                                        company.setAttribute("type", "text");
+                                        company.setAttribute("name", "company");
+                                        company.setAttribute("value", data.company);
+                                        company.setAttribute("id", "companyUpdate");
+                                        let companyText = document.createElement("label");
+                                        companyText.setAttribute("for", "companyUpdate");
+                                        companyText.innerText = "Company: ";
 
-                        let location = document.createElement("input");
-                        location.setAttribute("type", "text");
-                        location.setAttribute("name", "location");
-                        location.setAttribute("value", data.location);
-                        location.setAttribute("id", "locationUpdate");
-                        let locationText = document.createElement("label");
-                        locationText.setAttribute("for", "locationUpdate");
-                        locationText.innerText = "Location: ";
+                                        let location = document.createElement("input");
+                                        location.setAttribute("type", "text");
+                                        location.setAttribute("name", "location");
+                                        location.setAttribute("value", data.location);
+                                        location.setAttribute("id", "locationUpdate");
+                                        let locationText = document.createElement("label");
+                                        locationText.setAttribute("for", "locationUpdate");
+                                        locationText.innerText = "Location: ";
 
-                        let startDate = document.createElement("input");
-                        startDate.setAttribute("type", "text");
-                        startDate.setAttribute("name", "startDate");
-                        startDate.setAttribute("value", data.startDate);
-                        startDate.setAttribute("id", "startDateUpdate");
-                        let startDateText = document.createElement("label");
-                        startDateText.setAttribute("for", "startDateUpdate");
-                        startDateText.innerText = "Start Date: ";
+                                        let startDate = document.createElement("input");
+                                        startDate.setAttribute("type", "text");
+                                        startDate.setAttribute("name", "startDate");
+                                        startDate.setAttribute("value", data.startDate);
+                                        startDate.setAttribute("id", "startDateUpdate");
+                                        let startDateText = document.createElement("label");
+                                        startDateText.setAttribute("for", "startDateUpdate");
+                                        startDateText.innerText = "Start Date: ";
 
-                        let endDate = document.createElement("input");
-                        endDate.setAttribute("type", "text");
-                        endDate.setAttribute("name", "endDate");
-                        endDate.setAttribute("value", data.endDate);
-                        endDate.setAttribute("id", "endDateUpdate");
-                        let endDateText = document.createElement("label");
-                        endDateText.setAttribute("for", "endDateUpdate");
-                        endDateText.innerText = "End Date: ";
+                                        let endDate = document.createElement("input");
+                                        endDate.setAttribute("type", "text");
+                                        endDate.setAttribute("name", "endDate");
+                                        endDate.setAttribute("value", data.endDate);
+                                        endDate.setAttribute("id", "endDateUpdate");
+                                        let endDateText = document.createElement("label");
+                                        endDateText.setAttribute("for", "endDateUpdate");
+                                        endDateText.innerText = "End Date: ";
 
-                        let update = document.createElement("input");
-                        update.setAttribute("type", "button");
-                        update.setAttribute("value", "Update");
-                        update.setAttribute("id", "updateBtn");
-                        update.setAttribute("onclick", "updateExperience()");
+                                        let update = document.createElement("input");
+                                        update.setAttribute("type", "button");
+                                        update.setAttribute("value", "Update");
+                                        update.setAttribute("id", "updateBtn");
+                                        update.setAttribute("onclick", "updateExperience()");
 
-                        let br = document.createElement("br");
+                                        let br = document.createElement("br");
 
-                        updateContainer.append(titleText);
-                        updateContainer.append(title);
-                        updateContainer.append(br.cloneNode());
-                        updateContainer.append(companyText);
-                        updateContainer.append(company);
-                        updateContainer.append(br.cloneNode());
-                        updateContainer.append(locationText);
-                        updateContainer.append(location);
-                        updateContainer.append(br.cloneNode());
-                        updateContainer.append(startDateText);
-                        updateContainer.append(startDate);
-                        updateContainer.append(br.cloneNode());
-                        updateContainer.append(endDateText);
-                        updateContainer.append(endDate);
-                        updateContainer.append(br.cloneNode());
-                        updateContainer.append(update);
-                        $("#editXP").append(updateContainer);
+                                        updateContainer.append(titleText);
+                                        updateContainer.append(title);
+                                        updateContainer.append(br.cloneNode());
+                                        updateContainer.append(companyText);
+                                        updateContainer.append(company);
+                                        updateContainer.append(br.cloneNode());
+                                        updateContainer.append(locationText);
+                                        updateContainer.append(location);
+                                        updateContainer.append(br.cloneNode());
+                                        updateContainer.append(startDateText);
+                                        updateContainer.append(startDate);
+                                        updateContainer.append(br.cloneNode());
+                                        updateContainer.append(endDateText);
+                                        updateContainer.append(endDate);
+                                        updateContainer.append(br.cloneNode());
+                                        updateContainer.append(update);
+                                        $("#editXP").append(updateContainer);
+                                }
+                        })
                 }
         })
 }
 
+//runs when second update button is clicked, updates values of experience in database from input values
 function updateExperience() {
         let title = $("#titleUpdate").val();
         let company = $("#companyUpdate").val();
@@ -393,12 +363,145 @@ function updateExperience() {
 
         $.ajax({
                 method: 'GET',
-                url: '/profile/experiences/update?id=' + currentXP + '&title=' + title + '&company=' + company + '&location=' + location + '&start=' + startDate + '&end=' + endDate,
+                url: '/profile/findCurrentUser',
                 success: function(data){
-                        $("#editXP").html("");
-                        let msg = document.createElement("p");
-                        msg.innerText = "Experience updated, refresh page to view results";
-                        $("#editXP").append(msg);
+                        $.ajax({
+                                method: 'GET',
+                                url: '/profile/person/experiences/update?user='+ data.username + '&id=' + currentXP + '&title=' + title + '&company=' + company + '&location=' + location + '&start=' + startDate + '&end=' + endDate,
+                                success: function(data){
+                                        $("#editXP").html("");
+                                        let msg = document.createElement("p");
+                                        msg.innerText = "Experience updated, refresh page to view results";
+                                        $("#editXP").append(msg);
+                                }
+                        })
+                }
+        })
+}
+
+//functions for skills
+function showSkills(){
+        let skillsContainer = $("#skills");
+
+        skillsContainer.html("");
+        let skillsHeader = document.createElement("h2");
+        skillsHeader.setAttribute("id", "skillsHeader");
+        skillsHeader.innerText = "Skills";
+        skillsContainer.append(skillsHeader);
+
+        let skillsList = document.createElement("ul");
+        $.ajax({
+                method: 'GET',
+                url: '/profile/findCurrentUser',
+                success: function(data){
+                        $.ajax({
+                                method: 'GET',
+                                url: '/profile/person/skills?user=' + data.username,
+                                success: function(skills){
+                                        for(let i = 0; i < skills.length; i++) {
+                                                let skill = document.createElement("li");
+                                                skill.innerText = skills[i];
+                                                skillsList.appendChild(skill);
+                                                skillsArray.push(skills[i]);
+                                        }
+                                }
+                        })
+                }
+        })
+        
+        skillsContainer.append(skillsList);
+}
+
+function addSkill() {
+        $("#addSkillButton").remove();
+
+        let skillBox = document.createElement("input");
+        skillBox.setAttribute("type", "text");
+        skillBox.setAttribute("name", "skill");
+        skillBox.setAttribute("id", "skillNew");
+        let skillText = document.createElement("label");
+        skillText.setAttribute("for", "skillNew");
+        skillText.innerText = "Add Skill: ";
+
+        let confirm = document.createElement("input");
+        confirm.setAttribute("type", "button");
+        confirm.setAttribute("value", "Confirm");
+        confirm.setAttribute("id", "confirmSkill");
+        confirm.setAttribute("onclick", "confirmSkill()");
+
+        $("#addSkill").append(skillText);
+        $("#addSkill").append(skillBox);
+        $("#addSkill").append(document.createElement("br"));
+        $("#addSkill").append(confirm);
+}
+
+function confirmSkill() {
+        let skill = $("#skillNew").val();
+
+        $.ajax({
+                method: 'GET',
+                url: '/profile/findCurrentUser',
+                success: function(data) {
+                        $.ajax({
+                                method: 'GET',
+                                url: '/profile/person/skills/add?user=' + data.username + "&skill=" + skill,
+                                success: function(data) {
+                                        $("#addSkill").html("");
+                                        let msg = document.createElement("p");
+                                        msg.innerText = "New skill added, refresh page to view results";
+                                        $("#addSkill").append(msg);
+                                }
+                        })
+                }
+        })
+}
+
+function editSkills() {
+        $("#editSkillsButton").remove();
+
+        for(let i = 0; i < skillsArray.length; i++) {
+                let radio = document.createElement("input");
+                radio.setAttribute("type", "radio");
+                radio.setAttribute("id", skillsArray[i]);
+                radio.setAttribute("value", i);
+                radio.setAttribute("name", "Skill");
+
+                let label = document.createElement("label");
+                label.setAttribute("for", skillsArray[i]);
+                label.innerHTML = skillsArray[i];
+
+                $("#editSkills").append(radio);
+                $("#editSkills").append(label);
+                $("#editSkills").append(document.createElement("br"));
+        }
+        let deleteButton = document.createElement("input");
+        deleteButton.setAttribute("type", "button");
+        deleteButton.setAttribute("value", "Delete");
+        deleteButton.setAttribute("id", "delButton");
+        deleteButton.setAttribute("onclick", "deleteSkill()");
+        $("#editSkills").append(document.createElement("br"));
+        $("#editSkills").append(deleteButton);
+}
+
+function deleteSkill() {
+        let radios = document.getElementsByName('Skill');
+        var skillIndex = 0;
+        for(let i = 0; i < radios.length; i++) {
+                if(radios[i].checked) {
+                        skillIndex = radios[i].value;
+                }
+        }
+        $.ajax({
+                method: 'GET',
+                url: '/profile/findCurrentUser',
+                success: function(data){
+                        $.ajax({
+                                method: 'GET',
+                                url: '/profile/person/skills/delete?user='+ data.username + '&index=' + skillIndex,
+                                success: function(data){
+                                        location.href = "profile.html";
+                                }
+                        })
                 }
         })
 }
