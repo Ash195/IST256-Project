@@ -2,20 +2,19 @@
 //when submit thing is clicked do validateAccount function
 document.querySelector("#submit").addEventListener("click", validateAccount);
 
-
-
-
 //create currentUser object
 var currentUser = {username:"kmt5720", password:"kmt5720pass"};
 
 function validateAccount(){
-    if(currentUser.username == "username" && currentUser.password == "password"){
+    let usernameInput = document.getElementById('username');
+    let passwordInput = document.getElementById('password');
+    if(currentUser.username == usernameInput && currentUser.password == passwordInput){
         location.href = "profile.html";
     }
-    else if(currentUser.name == "username" && currentUser.password != "password"){
-        console.log("Sorry, but your password is invalid.")
+    else if(currentUser.name == username && currentUser.password != passwordInput){
+        console.log("Sorry, but our password is invalid.")
     }
-    else if(currentUser.name != "username" && currentUser.password == "password"){
+    else if(currentUser.name != username && currentUser.password == passwordInput){
         console.log("Sorry, but your username is invalid.")
     }
     else{
