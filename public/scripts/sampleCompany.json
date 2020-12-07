@@ -1,10 +1,46 @@
-// {
-//     "company": [
-//     {
-//         "jobs":[],
-//         "location": ["San Antonio, California",],
-//         "skillFocus":["CSS", "JavaScript", "HTML", "Ruby"]
-        
-//     }
-// ]
-// }
+{
+    "companies": [
+    {
+        "companyName": "bae",
+        "jobs":["accountant", "linux systems administrator", "computer data analyst"],
+        "location": "San Antonio, California",
+        "skillFocus":["linux", "java", "ruby"],
+        "logo": "./images/bae.png"
+    },
+    {
+        "companyName": "ubisoft",
+        "jobs":["systems engineer"],
+        "location": "Dallas, Texas",
+        "skillFocus":["c++", "ruby"],
+        "logo": "./images/Ubisoft.png"
+    },
+    {
+        "companyName": "google",
+        "jobs":["computer science internships", "front end web developer", "systems administrator", "project manager"],
+        "location": "Los Angeles, California",
+        "skillFocus":["CSS", "JavaScript", "HTML", "Ruby"],
+        "logo": "./images/google.jpg"
+    },
+    {
+        "companyName": "adobe",
+        "jobs":["data analyst", "site developer", "site designer"],
+        "location": "Queens, New York",
+        "skillFocus":["CSS", "JavaScript", "HTML", "Ruby"],
+        "logo": "./images/adobe.png"
+    },
+    {
+        "companyName": "intel",
+        "jobs":["cyber security internship","cyber security department team member"],
+        "location": "San Antonio, California",
+        "skillFocus":["CSS", "JavaScript", "HTML", "Ruby"],
+        "logo": "./images/intel.png"
+    },
+    {
+        "companyName": "honda",
+        "jobs":["interface designer","application development team"],
+        "location": "San Antonio, California",
+        "skillFocus":["CSS", "JavaScript", "HTML", "Ruby"],
+        "logo": "./images/honda.png"
+    }
+]
+}
