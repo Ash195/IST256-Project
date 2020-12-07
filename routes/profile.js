@@ -68,12 +68,12 @@ router.get('/people',function(req, res, next){
 
 //look for a specific person if given username
 router.get('/person', function(req, res, next){
-   Person.findByUsername(req.query.username, function(err, data){
+   Person.findOne({"username": req.query.user}, function(err, data){
       if (data === null){
          console.log("No data found");
       }
       else{
-         res.send(data)
+         res.send(data);
       }
    });
 })
@@ -141,6 +141,35 @@ router.get('/experiences/update', function(req, res, next){
        } 
        else {
           res.send("Experience updated");
+       }
+    });
+})
+
+router.get('/login', function(req, res, next){
+   CurrentUser.updateOne({}, {"user": req.query.user}, function(err, data) {
+       if (data === null) {
+          console.log("No data found");
+       } 
+       else {
+          res.send("Current user updated");
+       }
+    });
+})
+
+router.get('/findCurrentUser', function(req, res, next){
+   CurrentUser.findOne({}, function(err, data) {
+       if (data === null) {
+          console.log("No data found");
+       } 
+       else {
+         Person.findOne({"username": data.user}, function(err, data){
+            if (data === null){
+               console.log("No data found");
+            }
+            else{
+               res.send(data);
+            }
+         });
        }
     });
 })

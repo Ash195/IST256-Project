@@ -10,6 +10,8 @@ var usersJSON = '{ "users": [' +
 let users = JSON.parse(usersJSON);
 let header = $("#header");
 
+findCurrentUser();
+
 //profile picture
 let img = document.createElement("img");
 img.src = "./images/tempProfilePic.jpg"
@@ -17,12 +19,6 @@ img.alt = users.users[0].firstName + "'s Profile Picture";
 img.width = 200;
 img.height = 200;
 header.append(img);
-
-//name of user
-let profileHeader = document.createElement("h1");
-profileHeader.id = "name";
-profileHeader.innerText = users.users[0].firstName + " " + users.users[0].lastName;
-header.append(profileHeader);
 
 //experiences
 let xp = $("#experiences");
@@ -32,18 +28,71 @@ var experienceID = [];
 var currentXP;
 showExperiences();
 
-//skills
-let skillsContainer = $("#skills");
-
-let skillsList = document.createElement("ul");
-for(let i = 0; i < users.users[0].skills.length; i++) {
-        let skill = document.createElement("li");
-        skill.innerText = users.users[0].skills[i];
-        skillsList.appendChild(skill);
-}
-skillsContainer.append(skillsList);
-
 //functions
+function findCurrentUser() {
+        $.ajax({
+                method: 'GET',
+                url: '/profile/findCurrentUser',
+                success: function(data){
+                        //name
+                        let profileHeader = document.createElement("h1");
+                        profileHeader.id = "name";
+                        profileHeader.innerText = data.firstName + " " + data.lastName;
+                        header.append(profileHeader);
+                        
+                        //experiences
+                        Object.keys(data.experiences).forEach(key => {
+                                let experience = data.experiences[key];
+                        
+                                let container = document.createElement("div");
+                                container.classList.add("experience");
+                                let container2 = document.createElement("div");
+                                container2.classList.add("experience2");
+                        
+                                let title = document.createElement("h3");
+                                title.innerText = experience.title;
+                                title.classList.add("title");
+                                experienceTitles.push(experience.title);
+                        
+                                let company = document.createElement("p");
+                                company.innerText = experience.company;
+                                company.classList.add("company");
+                        
+                                let location = document.createElement("p");
+                                location.innerText = experience.location;
+                                location.classList.add("location");
+                        
+                                let startDate = experience.startDate;
+                                let endDate = experience.endDate;
+                                let date = document.createElement("p");
+                                date.innerText = startDate + " - " + endDate;
+                                date.classList.add("date");
+                                
+                                experienceID.push(experience._id);
+                        
+                                container.append(title);
+                                container2.append(company);
+                                container2.append(location);
+                                container2.append(date);
+                                container.append(container2);
+                                xp.append(container);
+                                xpCount++;
+                        });
+
+                        //skills
+                        let skillsContainer = $("#skills");
+
+                        let skillsList = document.createElement("ul");
+                        for(let i = 0; i < data.skills.length; i++) {
+                                let skill = document.createElement("li");
+                                skill.innerText = data.skills[i];
+                                skillsList.appendChild(skill);
+                        }
+                        skillsContainer.append(skillsList);
+                }
+            })
+}
+
 function addExperience() {
         $("#xpButton").remove();
 
@@ -234,10 +283,7 @@ function deleteExperience() {
                 method: 'GET',
                 url: '/profile/experiences/delete?id=' + xpID,
                 success: function(data){
-                        $("#editXP").html("");
-                        let msg = document.createElement("p");
-                        msg.innerText = "Experience deleted, refresh page to view results";
-                        $("#editXP").append(msg);
+                        location.href = "profile.html";
                 }
         })
 }
