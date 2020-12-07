@@ -53,6 +53,31 @@ router.get('/create', function(req, res, next){
       res.send("Person created");  
    });  
 })
+
+//looks for /profile/person and returns all person objects
+router.get('/get',function(req, res, next){
+   Person.find({}, function(err, data){
+      if (data === null) {
+         console.log("No person found");
+      }
+      else {
+         res.send(data)
+      }
+   })
+});
+
+//look for a specific person if given username
+router.get('/get', function(req, res, next){
+   Person.findByUsername(req.query.username, function(err, data){
+      if (data === null){
+         console.log("No data found");
+      }
+      else{
+         res.send(data)
+      }
+   });
+})
+
 //looks for /profile/experiences - this returns all experience objects
 router.get('/experiences', function(req, res, next){
     Experience.find({}, function(err, data) {
