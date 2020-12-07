@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var Experience = require("../models/experience");
 var Person = require("../models/person");
+var CurrentUser = require("../models/currentUser");
 
 //this entire file is looking for /profile
 //this specifically looks for /profile/create
