@@ -14,6 +14,7 @@ div.LogoandLogin, div.Menu{
     color: var(--text-color--);
 }
 
+
 /*image styling*/
 img {
     display: block;
@@ -22,6 +23,22 @@ img {
     border-radius: 50%;
   }
 
+  .container{
+      flex: display;
+      justify-content: center;
+      align-items: center;
+
+  }
+#homeText>p{
+    margin-top: 0;
+}
+#homeText{
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 50px;
+    color: var(--text-color--);
+    background-color: var(--secondary-color--);
+}
 /*for list elements this is padding, text info and color*/
 li{
     padding: 0px 10px 0px;

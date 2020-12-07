@@ -17,6 +17,16 @@ a {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     background-color: #333;
 }
+
+h1{
+    text-align: center;
+    background-color: lightskyblue;
+    color: white;
+    font-size: 50px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-top: 0;
+}
+
 /*Putting each text in it's own box*/
 #ItemA{
     grid-row: 1;
