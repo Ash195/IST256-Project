@@ -55,7 +55,7 @@ router.get('/create', function(req, res, next){
 })
 
 //looks for /profile/person and returns all person objects
-router.get('/get',function(req, res, next){
+router.get('/people',function(req, res, next){
    Person.find({}, function(err, data){
       if (data === null) {
          console.log("No person found");
@@ -67,7 +67,7 @@ router.get('/get',function(req, res, next){
 });
 
 //look for a specific person if given username
-router.get('/get', function(req, res, next){
+router.get('/person', function(req, res, next){
    Person.findByUsername(req.query.username, function(err, data){
       if (data === null){
          console.log("No data found");
