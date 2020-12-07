@@ -96,6 +96,7 @@ body {
     background: lightskyblue;
     color: white;
     font-size: 50px;
+    margin-top: 0;
   }
 
   #companyContainer {

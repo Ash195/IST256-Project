@@ -1,1 +1,1 @@
-//what i need to do make a get method, pass in the username and password, and use the find method to grab a person object and match them
+//did i need to make this i dont think i did delete if not needed
