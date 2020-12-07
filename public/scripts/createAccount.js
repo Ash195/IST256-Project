@@ -1,14 +1,16 @@
+//for stuff later
 var skillsCount = 0;
 var createXP = false;
 
 //functions
+//what occurs when the add experience button is added
 function addExperience() {
     $("#xpButton").remove();
     createXP = true;
-
+    //creates div
     let createContainer = document.createElement("div");
     createContainer.setAttribute("id", "createContainer");
-
+    //creates an input and a label for the input
     let title = document.createElement("input");
     title.setAttribute("type", "text");
     title.setAttribute("name", "title");
@@ -50,7 +52,7 @@ function addExperience() {
     endDateText.innerText = "End Date: ";
 
     let br = document.createElement("br");
-
+    //appends everything to div then append to div in html
     createContainer.append(titleText);
     createContainer.append(title);
     createContainer.append(br.cloneNode());
@@ -71,7 +73,7 @@ function addExperience() {
     createContainer.append(endDate);
     $("#experience").append(createContainer);
 }
-
+//same thing here
 function addSkills() {
     $("#skillsButton").remove();
     if(skillsCount > 0) {
@@ -100,8 +102,9 @@ function addSkills() {
     $("#skills").append(document.createElement("br"));
     $("#skills").append(another);
 }
-
+//what occurs when create account is clicked
 function createAccount() {
+    //sets the values of the text boxes to a variable
     let fName = $("#fName").val();
     let lName = $("#lName").val();
     let username = $("#username").val();
@@ -119,7 +122,7 @@ function createAccount() {
         startDate = $("#startDateNew").val();
         endDate = $("#endDateNew").val();
     }
-
+    //cant put an array in a url so i did this
     let skills = '&skills=';
     for(let i = 0; i < skillsCount; i++) {
         let skillString = "#skill" + i;
@@ -128,7 +131,9 @@ function createAccount() {
     }
     let countText = '&count=' + skillsCount;
     skills += countText;
-
+    //GET method, idk why, which sends the variables to routes/profile.js
+    //the route is looking for /profile/create and anything after doesnt matter
+    //go to routes/profile.js for more comments
     $.ajax({
             method: 'GET',
             url: '/profile/create?fName='+ fName + '&lName=' + lName + '&username=' + username + '&password=' + password + '&major=' + major + '&title=' + title + '&company=' + company + '&location=' + location + '&start=' + startDate + '&end=' + endDate + skills,

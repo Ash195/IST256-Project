@@ -3,6 +3,8 @@ var router = express.Router();
 var Experience = require("../models/experience");
 var Person = require("../models/person");
 
+//this entire file is looking for /profile
+//this specifically looks for /profile/create
 router.get('/create', function(req, res, next){
    let skills = [];
    let index = 0;
@@ -10,6 +12,7 @@ router.get('/create', function(req, res, next){
    let text = req.query.skills;
    let length = text.length;
    let skillLength = 0;
+   //gibberish cuz u cant put array into url
    for(let i = 0; i < req.query.count; i++) {
       index = text.indexOf("_", skillLength) + 1;
       index2 = text.indexOf("_", index);
@@ -21,6 +24,7 @@ router.get('/create', function(req, res, next){
       skills.push(skill);
       console.log("Skill length: " + skillLength + "index: " + index + "index2: " + index2);
    }
+   //creates an Experience object from variables in url
    var xp = new Experience({
       company:   req.query.company,
       title:     req.query.title,
@@ -28,11 +32,12 @@ router.get('/create', function(req, res, next){
       startDate: req.query.start,
       endDate:   req.query.end,
   });
+  //saves it to database and prints out ID
   xp.save(function(err, person) {
    console.log(xp._id);
    });  
-
   let exp = [xp];
+  //creates person object and saves it
   var person = new Person({
       firstName:   req.query.fName,
       lastName:    req.query.lName,
@@ -47,7 +52,7 @@ router.get('/create', function(req, res, next){
       res.send("Person created");  
    });  
 })
-
+//looks for /profile/experiences - this returns all experience objects
 router.get('/experiences', function(req, res, next){
     Experience.find({}, function(err, data) {
         if (data === null) {
@@ -58,7 +63,7 @@ router.get('/experiences', function(req, res, next){
         }
      });
 })
-
+//this looks for a specific experience if given an id
 router.get('/experience', function(req, res, next){
    Experience.findById(req.query.id, function(err, data) {
        if (data === null) {
@@ -83,7 +88,7 @@ router.get("/experiences/create", function(req, res) {
        res.send("Experience created");  
     });  
  });
-
+//deletes experience if given id
 router.get('/experiences/delete', function(req, res, next){
     Experience.findByIdAndRemove(req.query.id, function(err, data) {
         if (data === null) {
@@ -94,7 +99,7 @@ router.get('/experiences/delete', function(req, res, next){
         }
      });
 })
-
+//updates experience if given id and variables
 router.get('/experiences/update', function(req, res, next){
    Experience.findByIdAndUpdate(req.query.id, {
       "$set": {
