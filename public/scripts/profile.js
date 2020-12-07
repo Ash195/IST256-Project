@@ -380,6 +380,7 @@ function updateExperience() {
 }
 
 //functions for skills
+//shows skills when web page is opened
 function showSkills(){
         let skillsContainer = $("#skills");
 
@@ -412,6 +413,7 @@ function showSkills(){
         skillsContainer.append(skillsList);
 }
 
+//runs when add new skill button is clicked, shows label/input to add new skill and confirm button
 function addSkill() {
         $("#addSkillButton").remove();
 
@@ -435,6 +437,7 @@ function addSkill() {
         $("#addSkill").append(confirm);
 }
 
+//adds skill from user input to database
 function confirmSkill() {
         let skill = $("#skillNew").val();
 
@@ -456,6 +459,7 @@ function confirmSkill() {
         })
 }
 
+//shows radio buttons for skills and delete button
 function editSkills() {
         $("#editSkillsButton").remove();
 
@@ -483,6 +487,7 @@ function editSkills() {
         $("#editSkills").append(deleteButton);
 }
 
+//deletes selected skill from database and refreshes page
 function deleteSkill() {
         let radios = document.getElementsByName('Skill');
         var skillIndex = 0;
