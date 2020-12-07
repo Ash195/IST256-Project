@@ -26,7 +26,7 @@ var xpCount = 0;
 var experienceTitles = [];
 var experienceID = [];
 var currentXP;
-showExperiences();
+//showExperiences();
 
 //functions
 function findCurrentUser() {
@@ -173,17 +173,23 @@ function createExperience() {
         let location = $("#locationNew").val();
         let startDate = $("#startDateNew").val();
         let endDate = $("#endDateNew").val();
-
         $.ajax({
                 method: 'GET',
-                url: '/profile/experiences/create?title=' + title + '&company=' + company + '&location=' + location + '&start=' + startDate + '&end=' + endDate,
-                success: function(data){
-                        $("#newXP").html("");
-                        let msg = document.createElement("p");
-                        msg.innerText = "Experience created, refresh page to view results";
-                        $("#newXP").append(msg);
+                url: '/profile/findCurrentUser',
+                success: function(data) {
+                        $.ajax({
+                                method: 'GET',
+                                url: '/profile/person/createXP?user=' + data.username + '&title=' + title + '&company=' + company + '&location=' + location + '&start=' + startDate + '&end=' + endDate,
+                                success: function(data){
+                                        $("#newXP").html("");
+                                        let msg = document.createElement("p");
+                                        msg.innerText = "Experience created, refresh page to view results";
+                                        $("#newXP").append(msg);
+                        }
+                })
                 }
         })
+        
 }
 
 function showExperiences() {

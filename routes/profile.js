@@ -35,9 +35,9 @@ router.get('/create', function(req, res, next){
   });
   //saves it to database and prints out ID
   xp.save(function(err, person) {
-   console.log(xp._id);
+      
    });  
-  let exp = [xp];
+   let exp = [xp];
   //creates person object and saves it
   var person = new Person({
       firstName:   req.query.fName,
@@ -78,8 +78,36 @@ router.get('/person', function(req, res, next){
    });
 })
 
-//looks for /profile/experiences - this returns all experience objects
-router.get('/experiences', function(req, res, next){
+router.get('/person/createXP', function(req, res, next){
+   var exp = [];
+   Person.findOne({"username": req.query.user}, function(err, data){
+      if (data === null){
+         console.log("No data found");
+      }
+      else{
+         exp = data.experiences;
+         var xp = new Experience({
+            company:   req.query.company,
+            title:     req.query.title,
+            location:  req.query.location,
+            startDate: req.query.start,
+            endDate:   req.query.end,
+         });
+         exp.push(xp);
+         Person.updateOne({"username": req.query.user}, {"experiences": exp}, function(err, data){
+            if (data === null){
+               console.log("No data found 2");
+            }
+            else{
+               res.send("Experience created");
+            }
+         });
+      }
+   }); 
+})
+
+//looks for /profile/person/experiences - this returns all experience objects
+router.get('/person/experiences', function(req, res, next){
     Experience.find({}, function(err, data) {
         if (data === null) {
            console.log("No data found");
@@ -89,8 +117,9 @@ router.get('/experiences', function(req, res, next){
         }
      });
 })
+
 //this looks for a specific experience if given an id
-router.get('/experience', function(req, res, next){
+router.get('/person/experience', function(req, res, next){
    Experience.findById(req.query.id, function(err, data) {
        if (data === null) {
           console.log("No data found");
@@ -101,21 +130,8 @@ router.get('/experience', function(req, res, next){
     });
 })
 
-router.get("/experiences/create", function(req, res) {
-   var xp = new Experience({
-       company:   req.query.company,
-       title:     req.query.title,
-       location:  req.query.location,
-       startDate: req.query.start,
-       endDate:   req.query.end,
-   });
-
-   xp.save(function(err, xp) {
-       res.send("Experience created");  
-    });  
- });
 //deletes experience if given id
-router.get('/experiences/delete', function(req, res, next){
+router.get('/person/experiences/delete', function(req, res, next){
     Experience.findByIdAndRemove(req.query.id, function(err, data) {
         if (data === null) {
            console.log("No data found");
@@ -126,7 +142,7 @@ router.get('/experiences/delete', function(req, res, next){
      });
 })
 //updates experience if given id and variables
-router.get('/experiences/update', function(req, res, next){
+router.get('/person/experiences/update', function(req, res, next){
    Experience.findByIdAndUpdate(req.query.id, {
       "$set": {
          "title": req.query.title,

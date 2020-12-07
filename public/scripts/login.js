@@ -16,20 +16,21 @@ function findPersonAndMatch(user, pass) {
         method: 'GET',
         url: '/profile/person?user=' + user,
         success: function(data){
+            
             foundUser = data.username;
             foundPass = data.password;
+            if(foundUser == user && foundPass == pass){
+                createCurrentUser(user);
+                location.href = "profile.html";
+            }
+            else{
+                alert("Your username or password is invalid. Please try again.");
+            }
         },
         error: function (request, status, error) {
             alert("User not found");
         }
     })
-    if(foundUser == user && foundPass == pass){
-        createCurrentUser(user);
-        location.href = "profile.html";
-    }
-    else{
-        alert("Your username or password is invalid. Please try again.");
-    }
 }
 
 function createCurrentUser(user) {
