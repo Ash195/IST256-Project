@@ -2,9 +2,10 @@
 <html lang = "en">
 <head>
     <meta charset='utf-8'>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="scripts/contact.js" defer></script>
     <link rel="stylesheet" type="text/css" href="styles/contact.css">
-    <title>Coctact</title>
+    <title>Contact</title>
 </head>
 
 
@@ -25,21 +26,18 @@
         <div id = "contactText">
             <p>Contact</p>
         </div>
-        <div>
-            <form>
-                <label>First Name</label>
-                <input placeholder="Your first name">
+        <div id="emailForm">
+            <form action="mailto:someone@example.com" method="post" enctype="text/plain">
+                <label for="name">Name: </label>
+                <input type="text" name="name" id="name" placeholder="Your name"><br><br>
 
-                <label>Last Name</label>
-                <input placeholder="Your last name">
+                <label for="email">Email: </label>
+                <input type="text" name="email" id="email" placeholder="ie. abc123@gmail.com"><br><br>
 
-                <label>Email</label>
-                <input placeholder="ie. abc123@gmail.com">
-
-                <label>Body</label>
-                <input placeholder="comments, concerns, etc">
-
+                <label for="body">Body: </label>
+                <input type="text" name="body" id="body" placeholder="comments, concerns, etc"><br><br>
             </form>
+            <input type="button" value="Send" id="sendButton" onclick="sendEmail()">
         </div>
     </body>
 </html>

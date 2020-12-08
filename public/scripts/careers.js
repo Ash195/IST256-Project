@@ -16,13 +16,18 @@ function search(id){
 function success(data){
     let related_jobs = data.jobs;
     let x = 0;
-        while(x < 10){
-        let jobname = related_jobs[x].job_title;
-        console.log(jobname);
-        let p = $('<ul></ul>').text(jobname);
-        $('#rec_jobs').append(p);
-        x++;
-        }
+    $('#submit').on('click',(e) => {
+        while(x < 900){
+            let jobname = related_jobs[x].job_title;
+            let job = $('#input').val();
+            if(jobname.includes(job)){
+            let p = $('<ul></ul>').text(jobname);
+            $('#rec_jobs').append(p);
+            }
+            x++;
+            }
+    })
+        
 }
 
   
