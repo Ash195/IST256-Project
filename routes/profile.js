@@ -33,10 +33,6 @@ router.get('/create', function(req, res, next){
       startDate: req.query.start,
       endDate:   req.query.end,
   });
-  //saves it to database and prints out ID
-  xp.save(function(err, person) {
-      
-   });  
    let exp = [xp];
   //creates person object and saves it
   var person = new Person({
